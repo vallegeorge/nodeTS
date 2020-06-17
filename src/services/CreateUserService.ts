@@ -12,6 +12,7 @@ interface Request {
 
 class CreateUserService {
   public async execute({ name, email, password }: Request): Promise<User> {
+
     const usersRepository = getRepository(User);
 
     const checkUserExists = await usersRepository.findOne({
@@ -30,9 +31,11 @@ class CreateUserService {
       password: hashedPassword,
     });
 
-    delete user.password;
+
 
     await usersRepository.save(user);
+
+    delete user.password;
 
     return user;
   }
